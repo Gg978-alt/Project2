@@ -1,4 +1,87 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup />
-</Project>
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+// Функция для задачи 1: Проверка на возрастающую последовательность цифр трёхзначного числа
+void checkIncreasingSequence() {
+    int number;
+    cout << "Введите трёхзначное число: ";
+    cin >> number;
+
+    // Извлекаем цифры
+    int hundreds = number / 100;
+    int tens = (number / 10) % 10;
+    int units = number % 10;
+
+    // Проверяем, является ли последовательность возрастающей
+    bool isIncreasing = (hundreds < tens) && (tens < units);
+
+    if (isIncreasing) {
+        cout << "Цифры числа образуют возрастающую последовательность." << endl;
+    } else {
+        cout << "Цифры числа не образуют возрастающую последовательность." << endl;
+    }
+}
+
+// Функция для задачи 2: Определение количества полных минут с начала суток
+void calculateFullMinutes() {
+    int N;
+    cout << "Введите количество секунд с начала суток: ";
+    cin >> N;
+
+    // Находим количество полных минут
+    int fullMinutes = N / 60;
+
+    cout << "Количество полных минут: " << fullMinutes << endl;
+}
+
+// Функция для задачи 3: Вычисление значения y
+double calculateY(double x) {
+    // Проверка, чтобы x не был равен нулю (иначе log(x) будет неопределён)
+    if (x == 0) {
+        cerr << "Ошибка: x не может быть равен нулю." << endl;
+        return NAN;
+    }
+
+    // Вычисление выражения
+    double result = 2 * tan(x) * sin(x + 0.25 * sqrt(1 - pow(sin(x), 2) * log(fabs(x))));
+    return result;
+}
+
+// Главная функция с меню выбора задачи
+int main() {
+    int choice;
+    cout << "Выберите действие:" << endl;
+    cout << "1. Проверка на возрастающую последовательность цифр трёхзначного числа" << endl;
+    cout << "2. Определение количества полных минут с начала суток" << endl;
+    cout << "3. Вычисление значения  по формуле" << endl;
+    cout << "Введите номер действия (1, 2 или 3): ";
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            checkIncreasingSequence();
+            break;
+        case 2:
+            calculateFullMinutes();
+            break;
+        case 3: {
+            double x;
+            cout << "Введите значение x: ";
+            cin >> x;
+
+            double y = calculateY(x);
+            if (!isnan(y)) {
+                cout << "Результат y: " << y << endl;
+            } else {
+                cout << "Невозможно вычислить y при данном x." << endl;
+            }
+            break;
+        }
+        default:
+            cout << "Неверный выбор. Пожалуйста, выберите 1, 2 или 3." << endl;
+    }
+
+    return 0;
+}
